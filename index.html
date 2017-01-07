@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" manifest="geo2share.manifest">
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=620">
+    <title>geoshare</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="192x192" href="./Centre_mark.svg.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style>
+    button,
+    textarea {
+        width: 99%;
+    }
+    button {
+        font-size: 4em;
+        padding: 0.4em;
+    }
+    </style>
+</head>
+<body onload="getLocation()" >
+
+    <textarea id="geo" >waiting</textarea>
+    <br />
+    <button onclick="copyGeo(geo)" >Copy geoURI</button>
+    
+    <textarea id="osm" >waiting</textarea>
+    <br />
+    <button onclick="copyGeo(osm)" >Copy OSM link</button>
+    
+    <div id="msg"></div>
+
+<script>
+var geo = document.getElementById("geo");
+var osm = document.getElementById("osm");
+var copybtn = document.getElementById("copybtn");
+var msg = document.getElementById("msg");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        msg.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+    geo.innerHTML = "geo:" + position.coords.latitude + "," + position.coords.longitude;
+    osm.innerHTML = "http://www.openstreetmap.org/?mlat="+ position.coords.latitude + "&mlon=" + position.coords.longitude ;
+}
+
+function copyGeo( copytext ) {
+      copytext.select();    
+      document.execCommand('copy');
+      msg.innerHTML =  copytext.innerHTML + " copied" ;
+}
+</script>
+</body>
+</html>
