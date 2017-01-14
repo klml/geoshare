@@ -16,6 +16,7 @@
     button {
         font-size: 4em;
         padding: 0.4em;
+        margin-bottom: 15px;
     }
     </style>
 </head>
@@ -28,25 +29,31 @@
     <textarea id="osm" >waiting</textarea>
     <br />
     <button onclick="copyGeo(osm)" >Copy OSM link</button>
-    
+
+    <a id="osmlink" href="">link to osm</a>
     <div id="msg"></div>
 
 <script>
 var geo = document.getElementById("geo");
 var osm = document.getElementById("osm");
+var osmlink = document.getElementById("osmlink");
 var copybtn = document.getElementById("copybtn");
 var msg = document.getElementById("msg");
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(createLinks);
     } else {
         msg.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
-function showPosition(position) {
-    geo.innerHTML = "geo:" + position.coords.latitude + "," + position.coords.longitude;
-    osm.innerHTML = "http://www.openstreetmap.org/?mlat="+ position.coords.latitude + "&mlon=" + position.coords.longitude ;
+function createLinks(position) {
+    geouri = "geo:" + position.coords.latitude + "," + position.coords.longitude;
+    osmurl = "http://www.openstreetmap.org/?mlat="+ position.coords.latitude + "&mlon=" + position.coords.longitude ;
+
+    geo.innerHTML = geouri ;
+    osm.innerHTML = osmlink.innerHTML = osmurl ;
+    osmlink.setAttribute('href', osmurl );
 }
 
 function copyGeo( copytext ) {
