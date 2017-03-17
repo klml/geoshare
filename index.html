@@ -23,7 +23,7 @@
 </head>
 <body onload="getLocation()" >
 
-    <textarea id="adress" style="height: 6em;" ></textarea></textarea>
+    <textarea id="adress" style="height: 6em;" ></textarea>
     <br />
     <button onclick="getStreetZipCity(adress)" >get adress</button>
 
@@ -48,9 +48,6 @@ var osmreverse = document.getElementById("osmreverse");
 var copybtn = document.getElementById("copybtn");
 var msg = document.getElementById("msg");
 
-var reverseurl = "";
-
-
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -58,6 +55,7 @@ function getLocation() {
     } else {
         msg.innerHTML = "Geolocation is not supported by this browser.";
     }
+    return ;
 }
 function createLinks(position) {
     geouri = "geo:" + position.coords.latitude + "," + position.coords.longitude;
@@ -71,6 +69,7 @@ function createLinks(position) {
 }
 
 function copyGeo( copytext ) {
+      getLocation(); // if device has moved
       copytext.select();
       document.execCommand('copy');
       msg.innerHTML =  "<em>" + copytext.innerHTML + "</em> copied" ;
@@ -95,10 +94,10 @@ var getJSON = function(url) {
 
 
 function getStreetZipCity(adressfield) {
-
+    adress.innerHTML = "" ; // blank to avoid old location
+    getLocation(); // if device has moved
     getJSON( reverseurl ).then(function(data) {
         var adresslist = data.address ;
-
         adress.innerHTML =  
         //~ adresslist.building +
         adresslist.road + '\n' +
@@ -113,7 +112,7 @@ function getStreetZipCity(adressfield) {
         copyGeo( adressfield );
 
     }, function(status) { 
-        console.log( status );
+        msg.innerHTML = status ; // TODO
     });
 
 }
