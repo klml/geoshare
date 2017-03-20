@@ -73,6 +73,7 @@ function copyGeo( copytext ) {
       copytext.select();
       document.execCommand('copy');
       msg.innerHTML =  "<em>" + copytext.innerHTML + "</em> copied" ;
+      copytext.blur() ;
 }
 
 var getJSON = function(url) {
