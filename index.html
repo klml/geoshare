@@ -27,11 +27,11 @@
     <br />
     <button onclick="getStreetZipCity(adress)" >get adress</button>
 
-    <textarea id="geo" >waiting</textarea>
+    <textarea id="geo" >getting location</textarea>
     <br />
     <button onclick="copyGeo(geo)" >Copy geoURI</button>
 
-    <textarea id="osm" >waiting</textarea>
+    <textarea id="osm" >getting location</textarea>
     <br />
     <button onclick="copyGeo(osm)" >Copy OSM link</button>
     <a id="osmlink" href="">link to osm</a>
@@ -95,6 +95,7 @@ var getJSON = function(url) {
 
 
 function getStreetZipCity(adressfield) {
+    msg.innerHTML = "getting adress" ;
     adress.innerHTML = "" ; // blank to avoid old location
     getLocation(); // if device has moved
     getJSON( reverseurl ).then(function(data) {
