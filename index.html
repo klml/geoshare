@@ -18,7 +18,7 @@
         padding: 0.4em;
         margin-bottom: 15px;
     }
-    #msg { border: 1px solid #8da7cc; border-left-width: 20px;color: green;font-size: 130%;padding: 5px;} 
+    #msg { border: 1px solid #8da7cc; border-left-width: 20px;color: green;font-size: 130%;padding: 5px; margin-top: 15px;} 
     </style>
 </head>
 <body onload="getLocation()" >
@@ -47,7 +47,7 @@ var osmlink = document.getElementById("osmlink");
 var osmreverse = document.getElementById("osmreverse");
 var copybtn = document.getElementById("copybtn");
 var msg = document.getElementById("msg");
-
+var accuracy = "" ;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -61,6 +61,8 @@ function createLinks(position) {
     geouri = "geo:" + position.coords.latitude + "," + position.coords.longitude;
     osmurl = "http://www.openstreetmap.org/?mlat="+ position.coords.latitude + "&mlon=" + position.coords.longitude ;
     reverseurl = '//nominatim.openstreetmap.org/reverse?format=json&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude ;
+
+    accuracy = Math.round( position.coords.accuracy ) ;
 
     geo.innerHTML = geouri ;
     osm.innerHTML = osmlink.innerHTML = osmurl ;
@@ -109,7 +111,8 @@ function getStreetZipCity(adressfield) {
         adresslist.city + '\n' +
         //~ adresslist.state_district +
         //~ adresslist.state +
-        adresslist.country ;
+        adresslist.country + '\n' +
+        "± " + accuracy + "m" ;
 
         copyGeo( adressfield );
 
