@@ -38,7 +38,7 @@ function getLocation() {
 function createLinks(position) {
     geouri = "geo:" + position.coords.latitude + "," + position.coords.longitude;
     osmurl = "http://www.openstreetmap.org/?mlat="+ position.coords.latitude + "&mlon=" + position.coords.longitude ;
-    reverseurl = '//nominatim.openstreetmap.org/reverse?format=json&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude ;
+    reverseurl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude ;
 
     accuracy = Math.round( position.coords.accuracy ) ;
 
